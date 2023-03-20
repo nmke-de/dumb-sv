@@ -25,11 +25,11 @@ int main(int argc, char **argv) {
 	// Can't supervise null process, right?
 	if (argc < 2)
 		return 1;
+	// Idk if this is necessary.
+	chdir("/");
 	// Check whether specified executable even exists
 	if (access(argv[1], F_OK) != 0)
 		return 2;
-	// Idk if this is necessary.
-	chdir("/");
 	// Prepare command
 	for (int i = 0; i < argc - 1;)
 		argv[i] = argv[++i];
