@@ -16,7 +16,7 @@ void fine(int signum) {
 	print("Killing ");
 	print(childname);
 	print("\n");
-	kill(child, SIGINT);
+	kill(child, SIGTERM);
 	running = 0;
 }
 
@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
 	// Prepare signal handler
 	childname = *argv;
 	signal(SIGINT, fine);
+	signal(SIGTERM, fine);
 	// Main loop. Wait until child quits before restarting.
 	for (;;) {
 		child = fork();
