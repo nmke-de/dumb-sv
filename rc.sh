@@ -7,3 +7,5 @@ run () {
 }
 
 run $PWD/empty/empty
+
+wait $!
