@@ -28,8 +28,10 @@ int main(int argc, char **argv) {
 	// Idk if this is necessary.
 	chdir("/");
 	// Check whether specified executable even exists
-	if (access(argv[1], F_OK) != 0)
+	if (access(argv[1], F_OK) != 0) {
+		print("404 - File not Found.");
 		return 2;
+	}
 	// Prepare command
 	for (int i = 0; i < argc - 1;)
 		argv[i] = argv[++i];
