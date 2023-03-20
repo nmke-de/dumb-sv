@@ -7,8 +7,3 @@ run () {
 }
 
 run $dn/empty/empty
-
-while true
-do
-	sleep 1
-done
