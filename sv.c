@@ -22,9 +22,12 @@ void fine(int signum) {
 
 // Supervise a single service without arguments
 int main(int argc, char **argv) {
-	// Can't supervise empty process, right?
+	// Can't supervise null process, right?
 	if (argc < 2)
 		return 1;
+	// Check whether specified executable even exists
+	if (access(argv[1], F_OK) != 0)
+		return 2;
 	// Idk if this is necessary.
 	chdir("/");
 	// Prepare command
