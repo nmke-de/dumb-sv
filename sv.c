@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <string.h>
 #include <signal.h>
 
@@ -27,10 +28,19 @@ int main(int argc, char **argv) {
 		return 1;
 	// Idk if this is necessary.
 	chdir("/");
-	// Check whether specified executable even exists
-	if (access(argv[1], F_OK) != 0) {
-		print("404 - File not Found.");
+	// Check whether specified executable even exists (and whether it is a regular executable file)
+	struct stat sb;
+	if (stat(argv[1], &sb) < 0) {
+		print("File not Found.\n");
 		return 2;
+	}
+	if (S_ISREG(sb.st_mode) == 0) {
+		print("File is not a regular file.\n");
+		return 3;
+	}
+	if (access(argv[1], X_OK) != 0) {
+		print("File is not executable.\n");
+		return 4;
 	}
 	// Prepare command
 	for (int i = 0; i < argc - 1;)
