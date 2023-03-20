@@ -24,8 +24,16 @@ void fine(int signum) {
 // Supervise a single service without arguments
 int main(int argc, char **argv) {
 	// Can't supervise null process, right?
-	if (argc < 2)
+	if (argc < 2) {
+		print("sv - The Dumb Process Supervisor. By nmke-de (c) 2023 - ???
+Version: 0.1
+Syntax: sv [absolute-path] [arguments...]
+
+sv will start a child process at [absolute-path] and
+restart it once the child process finishes. Killing
+sv will also send SIGTERM to the child process.\n");
 		return 1;
+	}
 	// Idk if this is necessary.
 	chdir("/");
 	// Check whether specified executable even exists (and whether it is a regular executable file)
