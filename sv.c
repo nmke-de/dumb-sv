@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <sys/prctl.h>
 #include <string.h>
 #include <signal.h>
 
@@ -55,6 +56,7 @@ sv will also send SIGTERM to the child process.\n");
 		argv[i] = argv[++i];
 	argv[argc - 1] = NULL;
 	// Prepare signal handler
+	prctl(PR_SET_PDEATHSIG, SIGTERM);
 	childname = *argv;
 	signal(SIGINT, fine);
 	signal(SIGTERM, fine);
