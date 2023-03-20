@@ -6,4 +6,4 @@ run () {
 	$dn/sv $@ &
 }
 
-run $dn/empty/empty
+run $PWD/empty/empty
