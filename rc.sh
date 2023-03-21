@@ -3,7 +3,7 @@
 dn=$(dirname $0)
 
 run () {
-	$dn/sv $@ &
+	$dn/dsv $@ &
 }
 
 run $PWD/empty/empty
