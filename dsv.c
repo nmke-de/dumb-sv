@@ -4,20 +4,17 @@
 #include <sys/prctl.h>
 #include <string.h>
 #include <signal.h>
+#include "print/print.h"
 
 extern char **environ;
 #define sys(args) execve(*(args), (args), environ)
-
-#define print(str) write(1, (str), strlen((str)))
 
 // Kill child process and stop supervising.
 pid_t child;
 char *childname;
 int running = 1;
 void fine(int signum) {
-	print("Killing ");
-	print(childname);
-	print("\n");
+	logln("Killing ", childname);
 	kill(child, SIGTERM);
 	running = 0;
 }
@@ -40,15 +37,15 @@ dsv will also send SIGTERM to the child process.\n");
 	// Check whether specified executable even exists (and whether it is a regular executable file)
 	struct stat sb;
 	if (stat(argv[1], &sb) < 0) {
-		print("File not Found.\n");
+		log("File not Found.\n");
 		return 2;
 	}
 	if (!S_ISREG(sb.st_mode)) {
-		print("File is not a regular file.\n");
+		log("File is not a regular file.\n");
 		return 3;
 	}
 	if (access(argv[1], X_OK) != 0) {
-		print("File is not executable.\n");
+		log("File is not executable.\n");
 		return 4;
 	}
 	// Prepare command
@@ -68,8 +65,6 @@ dsv will also send SIGTERM to the child process.\n");
 		wait(&child);
 		if (!running)
 			return 0;
-		print("Restarting ");
-		print(argv[0]);
-		print("...\n");
+		println("Restarting ", argv[0], "...");
 	}
 }
