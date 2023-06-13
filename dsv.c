@@ -43,7 +43,7 @@ dsv will also send SIGTERM to the child process.\n");
 		print("File not Found.\n");
 		return 2;
 	}
-	if (S_ISREG(sb.st_mode) == 0) {
+	if (!S_ISREG(sb.st_mode)) {
 		print("File is not a regular file.\n");
 		return 3;
 	}
